@@ -8,6 +8,10 @@ ActiveRecord::Migration.verbose = false
 
 class Comment < ActiveRecord::Base
   belongs_to :post
+
+  validates_presence_of :post
+
+  attr_accessor :an_attr_accessor
 end
 
 class Post < ActiveRecord::Base
