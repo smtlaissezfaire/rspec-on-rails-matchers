@@ -20,7 +20,7 @@ module Spec
         elsif options.has_key? :maximum
           max = options[:maximum]
         end
-        
+
         return simple_matcher("model to validate the length of #{attribute} within #{min || 0} and #{max || 'Infinity'}") do |model|
           invalid = false
           if !min.nil? && min >= 1
@@ -28,7 +28,7 @@ module Spec
 
             invalid = !model.valid? && model.errors.invalid?(attribute)
           end
-          
+
           if !max.nil?
             model.send("#{attribute}=", 'a' * (max + 1))
 
