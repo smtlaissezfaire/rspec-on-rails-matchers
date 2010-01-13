@@ -18,7 +18,16 @@ class Post < ActiveRecord::Base
   has_many :comments
 end
 
+class Boolean < ActiveRecord::Base
+  validates_inclusion_of :null_not_allowable, :in => [true, false]
+end
+
 ActiveRecord::Schema.define do
+  create_table :booleans do |t|
+    t.boolean :null_allowable
+    t.boolean :null_not_allowable
+  end
+
   create_table :posts, :force => true do |t|
     t.string :name
   end

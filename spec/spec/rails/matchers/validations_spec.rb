@@ -27,6 +27,21 @@ module Spec
           @example.validate_presence_of(:foobar).matches?(@comment).should be_false
         end
       end
+
+      describe "validate_inclusion_of" do
+        before do
+          @boolean = Boolean.new
+        end
+
+        it "should be true if it is the same list" do
+          matcher = @example.validate_inclusion_of(:null_not_allowable, :in => [true, false])
+          matcher.matches?(@boolean).should be_true
+        end
+
+        it "should not be true if one of the values is not true" do
+          @example.validate_inclusion_of(:null_not_allowable, :in => [nil]).matches?(@boolean).should be_false
+        end
+      end
     end
   end
 end

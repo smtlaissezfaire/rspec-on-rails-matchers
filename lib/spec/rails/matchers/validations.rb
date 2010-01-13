@@ -55,6 +55,21 @@ module Spec
           !model.valid? && model.errors.invalid?(attribute)
         end
       end
+
+      def validate_inclusion_of(attribute, hash)
+        values = hash[:in]
+
+        simple_matcher("model to validate the inclusion of #{attribute} in #{values.inspect}") do |model|
+          booleans = values.map do |value|
+            model.send("#{attribute}=", value)
+            model.valid?
+            errors = model.errors.on(attribute)
+            (errors == [] || errors == nil) ? true : false
+          end
+
+          booleans.all?
+        end
+      end
     end
   end
 end
