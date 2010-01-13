@@ -42,6 +42,22 @@ module Spec
           @example.validate_inclusion_of(:null_not_allowable, :in => [nil]).matches?(@boolean).should be_false
         end
       end
+
+      describe "validate_boolean_of" do
+        before do
+          @boolean = Boolean.new
+        end
+
+        it "should be true if it is valid when [true, false]" do
+          matcher = @example.validate_boolean_of(:null_not_allowable)
+          matcher.matches?(@boolean).should be_true
+        end
+
+        it "should not be true if it allows a nil" do
+          matcher = @example.validate_boolean_of(:null_allowable)
+          matcher.matches?(@boolean).should be_false
+        end
+      end
     end
   end
 end

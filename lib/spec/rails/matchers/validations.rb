@@ -69,6 +69,24 @@ module Spec
           booleans.all?
         end
       end
+
+      def validate_boolean_of(attribute)
+        values = [true, false]
+
+        simple_matcher("model to validate boolean of #{attribute}") do |model|
+          booleans = values.map do |value|
+            model.send("#{attribute}=", value)
+            model.valid?
+            !model.errors.invalid?(attribute)
+          end
+
+          model.send("#{attribute}=", nil)
+          model.valid?
+          booleans << model.errors.invalid?(attribute)
+
+          booleans.all?
+        end
+      end
     end
   end
 end
