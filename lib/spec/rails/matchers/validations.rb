@@ -63,8 +63,7 @@ module Spec
           booleans = values.map do |value|
             model.send("#{attribute}=", value)
             model.valid?
-            errors = model.errors.on(attribute)
-            (errors == [] || errors == nil) ? true : false
+            !model.errors.invalid?(attribute)
           end
 
           booleans.all?
