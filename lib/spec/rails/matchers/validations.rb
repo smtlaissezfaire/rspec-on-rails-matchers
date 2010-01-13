@@ -60,12 +60,7 @@ module Spec
         values = hash[:in]
 
         simple_matcher("model to validate the inclusion of #{attribute} in #{values.inspect}") do |model|
-          booleans = values.map do |value|
-            model.send("#{attribute}=", value)
-            model.valid?
-            !model.errors.invalid?(attribute)
-          end
-
+          booleans = assign_and_validate_values(model, attribute, values)
           booleans.all?
         end
       end
@@ -74,17 +69,23 @@ module Spec
         values = [true, false]
 
         simple_matcher("model to validate boolean of #{attribute}") do |model|
-          booleans = values.map do |value|
-            model.send("#{attribute}=", value)
-            model.valid?
-            !model.errors.invalid?(attribute)
-          end
-
-          model.send("#{attribute}=", nil)
-          model.valid?
-          booleans << model.errors.invalid?(attribute)
-
+          booleans = assign_and_validate_values(model, attribute, [true, false])
+          booleans << !assign_and_validate_value(model, attribute, nil)
           booleans.all?
+        end
+      end
+
+    private
+
+      def assign_and_validate_value(model, attribute, value)
+        model.send("#{attribute}=", value)
+        model.valid?
+        !model.errors.invalid?(attribute)
+      end
+
+      def assign_and_validate_values(model, attribute, values)
+        values.map do |value|
+          assign_and_validate_value(model, attribute, value)
         end
       end
     end
