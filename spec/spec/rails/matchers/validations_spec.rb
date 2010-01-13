@@ -22,6 +22,10 @@ module Spec
         it "should not match if the object does not have the association" do
           @example.validate_presence_of(:an_attr_accessor).matches?(@comment).should be_false
         end
+
+        it "should not match if the object does not respond to the method" do
+          @example.validate_presence_of(:foobar).matches?(@comment).should be_false
+        end
       end
     end
   end

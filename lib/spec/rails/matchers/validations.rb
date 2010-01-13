@@ -3,8 +3,12 @@ module Spec
     module Matchers
       def validate_presence_of(attribute)
         return simple_matcher("model to validate the presence of #{attribute}") do |model|
-          model.send("#{attribute}=", nil)
-          !model.valid? && model.errors.invalid?(attribute)
+          if !model.respond_to?("#{attribute}=")
+            false
+          else
+            model.send("#{attribute}=", nil)
+            !model.valid? && model.errors.invalid?(attribute)
+          end
         end
       end
 
