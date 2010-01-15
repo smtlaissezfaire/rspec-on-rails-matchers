@@ -27,6 +27,27 @@ module Spec
           @example.belong_to(:foobar).matches?(@comment).should be_false
         end
       end
+
+      describe "valid associations" do
+        before do
+          @comment = Comment.new
+          @invalid_association_object = InvalidAssociationClass.new
+        end
+
+        it "should have valid associations when all associations are valid" do
+          @example.have_valid_associations.matches?(@comment).should be_true
+        end
+
+        it "should not have valid associations when an association is invalid" do
+          @example.have_valid_associations.matches?(@invalid_association_object).should be_false
+        end
+
+        it "should use the failed association name in the failure message" do
+          matcher = @example.have_valid_associations
+          matcher.matches?(@invalid_association_object)
+          matcher.failure_message.should == "invalid or nonexistent association \"foos\" on InvalidAssociationClass"
+        end
+      end
     end
   end
 end

@@ -22,6 +22,12 @@ class Boolean < ActiveRecord::Base
   validates_inclusion_of :null_not_allowable, :in => [true, false]
 end
 
+class InvalidAssociationClass < ActiveRecord::Base
+  set_table_name "invalid_association"
+
+  has_many :foos
+end
+
 ActiveRecord::Schema.define do
   create_table :booleans do |t|
     t.boolean :null_allowable
@@ -35,5 +41,9 @@ ActiveRecord::Schema.define do
   create_table :comments, :force => true do |t|
     t.string :text
     t.integer :comment_id
+  end
+
+  create_table :invalid_association, :force => true do |t|
+    t.timestamps
   end
 end
