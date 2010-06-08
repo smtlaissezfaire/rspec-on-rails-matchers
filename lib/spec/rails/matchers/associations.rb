@@ -35,7 +35,7 @@ module Spec
           @model_class = model.class
 
           model.class.reflect_on_all_associations.each do |assoc|
-            model.send(assoc.name, true) rescue @failed_association = assoc.name
+            model.send(assoc.name) rescue @failed_association = assoc.name
           end
           !@failed_association
         end

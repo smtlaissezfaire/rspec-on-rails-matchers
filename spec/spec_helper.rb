@@ -8,10 +8,15 @@ ActiveRecord::Migration.verbose = false
 
 class Comment < ActiveRecord::Base
   belongs_to :post
+  belongs_to :commentable, :polymorphic => true
 
   validates_presence_of :post
 
   attr_accessor :an_attr_accessor
+end
+
+class Image < ActiveRecord::Base
+  has_one :comment, :as => :commentable
 end
 
 class Post < ActiveRecord::Base
@@ -34,13 +39,19 @@ ActiveRecord::Schema.define do
     t.boolean :null_not_allowable
   end
 
-  create_table :posts, :force => true do |t|
+  create_table :posts do |t|
     t.string :name
   end
 
-  create_table :comments, :force => true do |t|
-    t.string :text
-    t.integer :comment_id
+  create_table :comments do |t|
+    t.string  :text
+    t.integer :post_id
+    t.integer :commentable_id
+    t.string  :commentable_type
+  end
+
+  create_table :images do |t|
+    t.string :image_id
   end
 
   create_table :invalid_association, :force => true do |t|
