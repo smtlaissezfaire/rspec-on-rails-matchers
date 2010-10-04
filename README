@@ -13,7 +13,7 @@ Dependencies:
 Overview
 --------
 
-Adds the following RSpec matchers:
+Adds the following RSpec matchers using the new Matcher syntax (http://github.com/dchelimsky/rspec/wiki/custom-matchers):
 
   * Associations:
     Verify that the association has been defined. (doesn't verify that the association works!)
@@ -53,7 +53,7 @@ Adds the following RSpec matchers:
 
   * Observers:
     Verify that the observer is observing a class. (doesn't verify that the observation works)
-    
+
     object.should observe(:model)
     example: GroupObserver.should observe(Group)
 
@@ -64,7 +64,7 @@ Adds the following RSpec matchers:
     TM snippet: [hfpt + tab]
 
     response.should have_form_putting_to(url_or_path)
-    
+
     response.should have_text_field_for(:attribute)
     TM snippet: [htff + tab]
 
