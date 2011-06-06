@@ -65,12 +65,12 @@ RSpec::Matchers.define :validate_boolean_of do |attribute, options|
     booleans = values.map do |value|
       object.send("#{attribute}=", value)
       object.valid?
-      !object.errors.invalid?(attribute)
+      object.errors[attribute].empty?
     end
 
     object.send("#{attribute}=", nil)
     object.valid?
-    booleans << object.errors.invalid?(attribute)
+    booleans << object.errors[attribute].any?
 
     booleans.all?
   end
@@ -84,7 +84,7 @@ module RSpec
     def assign_and_validate_value(model, attribute, value)
       model.send("#{attribute}=", value)
       model.valid?
-      !model.errors.invalid?(attribute)
+      model.errors[attribute].empty?
     end
 
     def assign_and_validate_values(model, attribute, values)
