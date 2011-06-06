@@ -1,7 +1,9 @@
-require 'rake'
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
+require 'bundler'
 
-desc "Run all examples"
-Spec::Rake::SpecTask.new('spec') do |t|
-  t.spec_files = FileList['spec/**/*.rb']
-end
+Bundler::GemHelper.install_tasks :name => 'rspec-on-rails-matchers'
+
+desc "Run specs"
+RSpec::Core::RakeTask.new
+
+task :default => :spec
