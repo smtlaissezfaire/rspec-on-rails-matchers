@@ -26,7 +26,7 @@ RSpec::Matchers.define :have_and_belong_to_many do |association|
   end
 end
 
-RSpec::Matchers.define :have_valid_associations do |association|
+RSpec::Matchers.define :have_valid_associations do |association, *_|
   failed_association = nil
   model_class = nil
 
