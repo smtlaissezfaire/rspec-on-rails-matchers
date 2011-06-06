@@ -4,10 +4,18 @@ rspec-on-rails-matchers
 Setup
 ------
 
+Add the following to your gemfile:
+
+gem 'rspec-on-rails-matchers'
+
+In your spec helper, after the require to 'rspec/rails':
+
+  require 'rspec_on_rails_matchers'
+
 Dependencies:
 -------------
 
-  * rspec
+  * rspec >= 2
   * rspec_on_rails
 
 Overview
@@ -114,15 +122,15 @@ Usage:
 In your view spec:
 
     it "should render new form" do
-        render "/users/new.html.erb"
+      render "/users/new.html.erb"
 
-        response.should have_form_posting_to(users_path) do
-          with_text_field_for(:user_name)
-          with_text_area_for(:user_address)
-          with_text_field_for(:user_login)
-          with_text_field_for(:user_email)
-          with_submit_button
-        end
+      response.should have_form_posting_to(users_path) do
+        with_text_field_for(:user_name)
+        with_text_area_for(:user_address)
+        with_text_field_for(:user_login)
+        with_text_field_for(:user_email)
+        with_submit_button
+      end
     end
 
 In your model spec:
@@ -176,6 +184,8 @@ Core Contributors
   * Josh Knowles <joshknowles@gmail.com>
   * Bryan Helmkamp <bryan@brynary.com>
   * Matt Aimonetti <mattaimonetti@gmail.com>
+  * Scott Taylor <scott@railsnewbie.com>
+  * Stephen Schor <stephen@eastmedia.com>
 
 Contributors
 -------------
