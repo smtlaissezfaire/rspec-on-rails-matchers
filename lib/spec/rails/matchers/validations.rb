@@ -58,6 +58,25 @@ RSpec::Matchers.define :validate_inclusion_of do |attribute, options|
   end
 end
 
+RSpec::Matchers.define :validate_boolean_of do |attribute, options|
+  match do |object|
+    values = [true, false]
+
+    booleans = values.map do |value|
+      object.send("#{attribute}=", value)
+      object.valid?
+      !object.errors.invalid?(attribute)
+    end
+
+    object.send("#{attribute}=", nil)
+    object.valid?
+    booleans << object.errors.invalid?(attribute)
+
+    booleans.all?
+  end
+end
+
+
 module RSpec
   module Matchers
 

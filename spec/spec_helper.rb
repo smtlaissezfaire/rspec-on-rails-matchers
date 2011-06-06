@@ -1,10 +1,8 @@
-require 'action_controller'
 require 'active_record'
-require 'spec/rails/matchers'
 require File.expand_path(File.dirname(__FILE__) + "/../init")
 
 ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database  => ':memory:'
-ActiveRecord::Migration.verbose = false
+ActiveRecord::Migration.verbose = true
 
 class Comment < ActiveRecord::Base
   belongs_to :post

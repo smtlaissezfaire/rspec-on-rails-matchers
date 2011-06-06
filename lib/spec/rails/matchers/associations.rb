@@ -25,3 +25,27 @@ RSpec::Matchers.define :have_and_belong_to_many do |association|
     object.reflect_on_all_associations(:has_and_belongs_to_many).find { |a| a.name == association }
   end
 end
+
+RSpec::Matchers.define :have_valid_associations do |association|
+  failed_association = nil
+  model_class = nil
+
+  match do |object|
+    failed_association = nil
+    model_class = object.class
+
+    model_class.reflect_on_all_associations.each do |assoc|
+      begin
+        object.send(assoc.name)
+      rescue
+        failed_association = assoc.name
+      end
+    end
+
+    !failed_association
+  end
+
+  failure_message_for_should do |actual|
+    "invalid or nonexistent association \"#{failed_association}\" on #{model_class}"
+  end
+end
