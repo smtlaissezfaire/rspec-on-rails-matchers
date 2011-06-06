@@ -1,5 +1,5 @@
 require 'active_record'
-require File.expand_path(File.dirname(__FILE__) + "/../init")
+require File.expand_path(File.dirname(__FILE__) + "/../lib/rspec_on_rails_matchers")
 
 ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database  => ':memory:'
 ActiveRecord::Migration.verbose = true
