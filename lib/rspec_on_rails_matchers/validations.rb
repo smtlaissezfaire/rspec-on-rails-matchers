@@ -10,30 +10,32 @@ RSpec::Matchers.define :validate_presence_of do |attribute|
 end
 
 RSpec::Matchers.define :validate_length_of do |attribute, options|
-  if options.has_key? :within
-    min = options[:within].first
-    max = options[:within].last
-  elsif options.has_key? :is
-    min = options[:is]
-    max = min
-  elsif options.has_key? :minimum
-    min = options[:minimum]
-  elsif options.has_key? :maximum
-    max = options[:maximum]
-  end
+  match do |object|
+    if options.has_key? :within
+      min = options[:within].first
+      max = options[:within].last
+    elsif options.has_key? :is
+      min = options[:is]
+      max = min
+    elsif options.has_key? :minimum
+      min = options[:minimum]
+    elsif options.has_key? :maximum
+      max = options[:maximum]
+    end
 
-  invalid = false
-  if !min.nil? && min >= 1
-    object.send("#{attribute}=", 'a' * (min - 1))
-    invalid = !object.valid? && object.errors[attribute].any?
-  end
+    invalid = false
+    if !min.nil? && min >= 1
+      object.send("#{attribute}=", 'a' * (min - 1))
+      invalid = !object.valid? && object.errors[attribute].any?
+    end
 
-  if !max.nil?
-    object.send("#{attribute}=", 'a' * (max + 1))
-    invalid ||= !object.valid? && object.errors[attribute].any?
-  end
+    if !max.nil?
+      object.send("#{attribute}=", 'a' * (max + 1))
+      invalid ||= !object.valid? && object.errors[attribute].any?
+    end
 
-  invalid
+    invalid
+  end
 end
 
 RSpec::Matchers.define :validate_uniqueness_of do |attribute|

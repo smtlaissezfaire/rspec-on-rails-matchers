@@ -9,8 +9,9 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, :polymorphic => true
 
   validates_presence_of :post
+  validates_length_of :title, :within => 1..10
 
-  attr_accessor :an_attr_accessor
+  attr_accessor :an_attr_accessor, :title
 end
 
 class Image < ActiveRecord::Base
