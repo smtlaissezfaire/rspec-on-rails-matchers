@@ -38,6 +38,21 @@ describe RSpec::Matchers, "validations" do
     end
   end
 
+  describe "validate_length_of" do
+    before do
+      @comment = Comment.new(:title => "x", :post => Post.new)
+    end
+
+    it "should be true if the length is within the given bounds" do
+      matcher = @example.validate_length_of(:title, :within => 1..10)
+      matcher.matches?(@comment).should be_true
+    end
+
+    it "should not be true if the length is not within the given bounds" do
+      @example.validate_length_of(:title, :within => 3..5).matches?(@comment).should be_false
+    end
+  end
+
   describe "validate_boolean_of" do
     before do
       @boolean = Boolean.new
